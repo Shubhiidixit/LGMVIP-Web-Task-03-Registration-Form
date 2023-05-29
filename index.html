@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+
+      font-family: Arial, sans-serif;
+      background-color: #B0DAFF;
+
+      background-image: url('images/abstract.jpg');
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding-top: 20px;
+    }
+
+    .form-container,
+    .display-container {
+      flex: 1;
+      padding: 20px;
+      background-color: transparent;
+
+      border: 3px solid;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      margin-right: 10px;
+      margin-top: 25px;
+    }
+
+    .display-container {
+      margin-left: 10px;
+      margin-top: 25px;
+    }
+
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form-group button[type="submit"],
+    .form-group button[type="button"] {
+      padding: 10px 20px;
+      background-color: #003f5c;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-group button[type="button"]:hover {
+      background-color: #A84448;
+    }
+
+    .display-data {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .topdiv {
+      text-align: center;
+      color: #003f5c;
+      padding-top: 1%;
+      width: 100%;
+      height: 50px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
+
+
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topdiv">
+    <h1>Student Enrollment Form</h1>
+  </div>
+
+  <div class="container">
+
+    <div class="form-container">
+      <!-- <h2>Registration Form</h2> -->
+      <form id="registration-form">
+        <div class="form-group">
+          <label for="name"><b>Name:</b></label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email"><b>Email:</b></label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><b>Password:</b></label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label for="gender"><b>Gender:</b></label>
+          <label for="male"><input type="radio" id="male" name="gender" value="male"> <b>Male</b></label>
+          <label for="female"><input type="radio" id="female" name="gender" value="female"><b> Female</b></label>
+          <label for="other"><input type="radio" id="other" name="gender" value="other"> <b>Other</b></label>
+        </div>
+        <div class="form-group">
+          <label for="skills"><b>Skills:</b></label>
+          <label for="java"><input type="checkbox" id="java" name="skills" value="java"><b>Java</b></label>
+          <label for="python"><input type="checkbox" id="python" name="skills" value="python"> <b>Python</b></label>
+          <label for="c"><input type="checkbox" id="c" name="skills" value="c"> <b>C</b></label>
+          <label for="data-structures"><input type="checkbox" id="data-structures" name="skills"
+              value="data-structures"> <b>Data Structures</b></label>
+          <label for="web-development"><input type="checkbox" id="web-development" name="skills"
+              value="web-development"><b> Web Development</b></label>
+        </div>
+        <div class="form-group">
+          <label for="photo"><b>Photo:</b></label>
+          <input type="file" id="photo" name="photo">
+        </div>
+        <div class="form-group">
+          <button type="submit">Register</button>
+          <button type="button" id="unenroll-btn">Unenroll</button>
+          <button type="button" id="clear-btn">Clear</button>
+        </div>
+      </form>
+    </div>
+    <div class="display-container">
+      <div id="display-data" class="display-data"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("registration-form");
+    const displayData = document.getElementById("display-data");
+    const unenrollBtn = document.getElementById("unenroll-btn");
+    const clearBtn = document.getElementById("clear-btn");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
+      const skills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(skill => skill.value);
+      const photo = document.getElementById("photo").value;
+
+      const data = {
+        name: name,
+        email: email,
+        password: password,
+        gender: gender,
+        skills: skills.join(', '),
+        photo: photo
+      };
+
+      let displayHTML = '<h3>Registration Data:</h3>';
+      displayHTML += `<p><strong>Name:</strong> ${data.name}</p>`;
+      displayHTML += `<p><strong>Email:</strong> ${data.email}</p>`;
+      displayHTML += `<p><strong>Password:</strong> ${data.password}</p>`;
+      displayHTML += `<p><strong>Gender:</strong> ${data.gender}</p>`;
+      displayHTML += `<p><strong>Skills:</strong> ${data.skills}</p>`;
+      if (data.photo) {
+        displayHTML += `<p><strong>Photo:</strong></p>`;
+        displayHTML += `<img src="${data.photo}" alt="User Photo" style="max-width: 200px; max-height: 200px;">`;
+      }
+
+      displayData.innerHTML = displayHTML;
+
+      form.reset();
+    });
+
+    unenrollBtn.addEventListener("click", function () {
+      displayData.innerHTML = "";
+    });
+
+    clearBtn.addEventListener("click", function () {
+      form.reset();
+      displayData.innerHTML = "";
+    });
+  </script>
+</body>
+
+</html>
